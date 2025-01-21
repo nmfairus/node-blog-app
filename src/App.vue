@@ -4,12 +4,20 @@ import Navbar from './components/partials/Nav.vue';
 import Hero from './components/Hero.vue';
 import Main from './components/Main.vue';
 import Footer from './components/partials/Footer.vue';
+
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+
+const route = useRoute();
+const isHomePage = computed(() => route.path === '/');
+
 </script>
 
 <template>
   <Navbar />
-  <Hero />
-  <Main />
-  <Footer />
+  <Hero v-if="isHomePage" />
+  <router-view />
 
+  <Footer />
+  
 </template>
