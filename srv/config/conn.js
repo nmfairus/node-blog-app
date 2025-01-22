@@ -1,7 +1,4 @@
-// Importing mongoose
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
 
 // Setting up the connection
 const dbURI = process.env.MONGODB_URI;

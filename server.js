@@ -4,6 +4,9 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import userRoutes from './srv/routes/userRoutes.js';
 
+// Load environment variables
+
+
 // Import database
 import connectToDatabase from "./srv/config/conn.js";
 connectToDatabase();
