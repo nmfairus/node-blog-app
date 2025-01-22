@@ -61,7 +61,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update a user by id
-router.put('/update/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { name, email, password } = req.body;
   
