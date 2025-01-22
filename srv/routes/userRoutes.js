@@ -14,6 +14,21 @@ router.post('/register', async (req, res) => {
     }
 });
 
+// Login a user
+router.post('/login', async (req, res) => {
+    try {
+        const user = await User.findByCredentials(req.body.email, req.body.password);
+        if (!user) {
+            return res.status(401).send({ error: 'Login gagal! Periksa kembali email dan password anda.' });
+        }
+        // const token = await user.generateAuthToken();
+        // res.send({ user, token });
+        console.log(user);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
 // Get all users
 router.get('/', async (req, res) => {
     try {

@@ -20,6 +20,11 @@ app.use(cors());
 // Import user routes
 app.use('/users', userRoutes);
 
+// Check for errors
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke');
+});
 
 // Start the server
 app.listen(port, () => {
