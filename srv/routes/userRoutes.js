@@ -1,6 +1,10 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import User from '../models/user.js';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import verifyToken from '../middlewares/authMiddleware.js';
+dotenv.config();
 
 const router = express.Router();
 
@@ -34,7 +38,8 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await User.findByCredentials(email, password);
-        res.status(200).send('user');
+        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.status(200).send({ user, token });
     } catch (error) {
         res.status(400).send({ error: 'Login failed!' });
     }
@@ -51,7 +56,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get a user by id
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         res.status(200).send(user);
