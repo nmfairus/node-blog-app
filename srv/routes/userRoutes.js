@@ -34,7 +34,7 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await User.findByCredentials(email, password);
-        res.status(200).send(user);
+        res.status(200).send('user');
     } catch (error) {
         res.status(400).send({ error: 'Login failed!' });
     }
