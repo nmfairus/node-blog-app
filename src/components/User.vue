@@ -33,7 +33,10 @@ onMounted(() => {
         <tbody>
           <tr v-for="(user, index) in users" :key="user.id" :class="index % 2 === 0 ? 'bg-gray-100' : ''">
             <td class="py-2 px-4 border-b">{{ index + 1 }}</td>
-            <td class="py-2 px-4 border-b">{{ user._id }}</td>
+            <td class="py-2 px-4 border-b">
+            <router-link :to="`/users/${user._id}`" class="text-blue-500 hover:underline">
+              {{ user._id }}
+            </router-link></td>
             <td class="py-2 px-4 border-b">{{ user.name }}</td>
             <td class="py-2 px-4 border-b">{{ user.email }}</td>
           </tr>
