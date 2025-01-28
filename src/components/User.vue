@@ -19,8 +19,9 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="container mx-auto p-4">
-      <h1 class="text-2xl font-bold mb-4">Users</h1>
+  <div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Users</h1>
+    <div class="overflow-x-auto">
       <table class="min-w-full bg-white">
         <thead>
           <tr>
@@ -31,18 +32,24 @@ onMounted(() => {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(user, index) in users" :key="user.id" :class="index % 2 === 0 ? 'bg-gray-100' : ''">
+          <tr v-for="(user, index) in users" :key="user._id" :class="index % 2 === 0 ? 'bg-gray-100' : ''">
             <td class="py-2 px-4 border-b">{{ index + 1 }}</td>
             <td class="py-2 px-4 border-b">
-            <router-link :to="`/users/${user._id}`" class="text-blue-500 hover:underline">
-              {{ user._id }}
-            </router-link></td>
+              <router-link :to="`/users/${user._id}`" class="text-blue-500 hover:underline">
+                {{ user._id }}
+              </router-link>
+            </td>
             <td class="py-2 px-4 border-b">{{ user.name }}</td>
             <td class="py-2 px-4 border-b">{{ user.email }}</td>
           </tr>
         </tbody>
       </table>
     </div>
-  </template>
+  </div>
+</template>
+
+<style scoped>
+/* Add your styles here */
+</style>
 
 

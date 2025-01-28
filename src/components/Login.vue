@@ -40,20 +40,29 @@
     </div>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-            email: '',
-            password: ''
-        };
-    },
-    methods: {
-        handleLogin() {
-            // Handle login logic here
-            console.log('Email:', this.email);
-            console.log('Password:', this.password);
-        }
-    }
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+
+const email = ref('');
+const password = ref('');
+const router = useRouter();
+
+const handleLogin = async () => {
+  try {
+    const response = await axios.post('http://localhost:3000/users/login', {
+      email: email.value,
+      password: password.value
+    });
+    const token = response.data.token;
+    localStorage.setItem('token', token);
+    console.log('Login successful, token saved:', token);
+    // Redirect to another page or perform other actions
+    router.push('/users');
+  } catch (error) {
+    console.error('Login failed:', error);
+    alert('Login failed. Please check your credentials and try again.');
+  }
 };
 </script>
