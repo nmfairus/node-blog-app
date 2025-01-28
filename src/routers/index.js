@@ -5,6 +5,7 @@ import User from '@/components/User.vue';
 import Login from '@/components/Login.vue';
 import UserDetail from '@/components/UserDetail.vue';
 import Contact from '@/components/Contact.vue';
+import Dashboard from '@/components/Dashboard.vue';
 
 const routes = [
     { path: '/', component: Main },
@@ -12,7 +13,8 @@ const routes = [
     { path: '/users', component: User },
     { path: '/users/:id', component: UserDetail },
     { path: '/login', component: Login },
-    { path: '/contact', component: Contact }
+    { path: '/contact', component: Contact },
+    { path: '/dashboard', component: Dashboard }
 ];
 
 const router = createRouter({

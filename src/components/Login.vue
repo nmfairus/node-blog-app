@@ -59,7 +59,7 @@ const handleLogin = async () => {
     localStorage.setItem('token', token);
     console.log('Login successful, token saved:', token);
     // Redirect to another page or perform other actions
-    router.push('/users');
+    router.push('/dashboard');
   } catch (error) {
     console.error('Login failed:', error);
     alert('Login failed. Please check your credentials and try again.');
