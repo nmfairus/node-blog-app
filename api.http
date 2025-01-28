@@ -21,6 +21,9 @@ Content-Type: application/json
 GET http://localhost:3000/users
 Content-Type: application/json
 
+### Get All Users and count
+GET http://localhost:3000/users/count
+Content-Type: application/json
 ### Get User By Id
 @token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQGV4YW1wbGUuY29tIiwiaWF0IjoxNzM3NTU0NTY4LCJleHAiOjE3Mzc1NTgxNjh9.PpxXtzMWMtTuC5FMLNCvCGl4QYqYj7kjpXabhjgGB-Y
 GET http://localhost:3000/users/678e4ada90f3aec4253bf6e7

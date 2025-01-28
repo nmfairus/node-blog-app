@@ -55,6 +55,17 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Get all users and count
+router.get('/count', async (req, res) => {
+    try {
+        const users = await User.find();
+        const count = users.length;
+        res.status(200).send({ count });
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
 // Get a user by id
 router.get('/:id', verifyToken, async (req, res) => {
     try {
@@ -115,5 +126,7 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+
 
 export default router;
