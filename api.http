@@ -35,9 +35,8 @@ PUT http://localhost:3000/users/678e4ada90f3aec4253bf6e7
 Content-Type: application/json
 
 {
-    "name": "user1_updates",
-    "email": "user1@example.com",
-    "password": "password123"
+    "name": "user1_up",
+    "email": "user1@example.com"
 }
 
 ### Delete User
