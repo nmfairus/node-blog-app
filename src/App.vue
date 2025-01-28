@@ -14,10 +14,12 @@ const isHomePage = computed(() => route.path === '/');
 </script>
 
 <template>
-  <Navbar />
-  <Hero v-if="isHomePage" />
-  <router-view />
-
-  <Footer />
-  
+  <div class="min-h-screen flex flex-col">
+    <Navbar />
+    <div class="flex-grow">
+      <Hero v-if="isHomePage" />
+      <router-view />
+    </div>
+    <Footer />
+  </div>
 </template>
