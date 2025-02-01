@@ -1,44 +1,52 @@
 <template>
-  <div class="mt-20 flex items-center justify-center bg-gray-100">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-      <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-      <form @submit.prevent="handleLogin">
-        <div class="mb-4">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-            Email
-          </label>
+  <div class="h-[85vh] flex items-center justify-center bg-slate-100">
+    <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm space-y-4">
+      <!-- Header -->
+      <h2 class="text-2xl font-bold text-center text-gray-800">Log Masuk</h2>
+
+      <!-- Form -->
+      <form @submit.prevent="handleLogin" class="space-y-4">
+        <!-- Email Field -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
           <input
             type="email"
             id="email"
             v-model="email"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="contoh@email.com"
             required
           />
         </div>
-        <div class="mb-6">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-            Password
-          </label>
+
+        <!-- Password Field -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700">Kata Laluan</label>
           <input
             type="password"
             id="password"
             v-model="password"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="Kata laluan anda"
             required
           />
         </div>
-        <div class="mb-4">
-          <button
-            type="submit"
-            class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
-          >
-            Login
-          </button>
-        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-2 px-4 rounded-md hover:from-green-600 hover:to-green-700 transition duration-300 ease-in-out"
+        >
+          Log Masuk
+        </button>
       </form>
-      <p class="text-center text-gray-600">
+
+      <!-- Footer Link -->
+      <p class="text-center text-sm text-gray-600">
         Belum mempunyai akaun? 
-        <router-link to="/register" class="text-blue-500 hover:underline">Daftar di sini</router-link>
+        <router-link to="/register" class="text-green-600 hover:text-green-700 font-medium underline">
+          Daftar di sini
+        </router-link>
       </p>
     </div>
   </div>
@@ -62,15 +70,35 @@ const handleLogin = async () => {
     const token = response.data.token;
     localStorage.setItem('token', token);
     console.log('Login successful, token saved:', token);
-    // Redirect to another page or perform other actions
+    // Redirect to dashboard or another page
     router.push('/dashboard');
   } catch (error) {
     console.error('Login failed:', error);
-    alert('Login failed. Please check your credentials and try again.');
+    alert('Log masuk gagal. Sila semak maklumat anda dan cuba lagi.');
   }
 };
 </script>
 
 <style scoped>
-/* Add your styles here */
+/* Background Color */
+.bg-slate-100 {
+  background-color: #f1f5f9; /* Warna slate nipis */
+}
+
+/* Shadow Effect */
+.shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Input Focus Styling */
+.focus\:ring-2:focus {
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5);
+}
+
+/* Button Hover Animation */
+.transition {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
 </style>
