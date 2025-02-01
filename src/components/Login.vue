@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[85vh] flex items-center justify-center bg-slate-100">
+  <div class="h-[80vh] flex items-center justify-center bg-slate-100">
     <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm space-y-4">
       <!-- Header -->
       <h2 class="text-2xl font-bold text-center text-gray-800">Log Masuk</h2>
@@ -56,7 +56,9 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user.js';
 
+const userStore = useUserStore();
 const email = ref('');
 const password = ref('');
 const router = useRouter();
@@ -68,8 +70,11 @@ const handleLogin = async () => {
       password: password.value
     });
     const token = response.data.token;
+    const user = response.data.user;
+    useUserStore().login(user, token);
     localStorage.setItem('token', token);
-    console.log('Login successful, token saved:', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    console.log('Login successful, token saved:', token, user);
     // Redirect to dashboard or another page
     router.push('/dashboard');
   } catch (error) {
