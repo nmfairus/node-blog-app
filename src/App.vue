@@ -14,7 +14,7 @@ const isHomePage = computed(() => route.path === '/');
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col bg-slate-100">
     <Navbar />
     <div class="flex-grow">
       <Hero v-if="isHomePage" />
