@@ -1,74 +1,113 @@
-<script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
-const isMenuOpen = ref(false);
-const isSpinning = ref(false);
-
-const handleLogout = () => {
-  localStorage.removeItem('token');
-  console.log('Logout successful, token removed');
-  router.push('/login');
-  closeMenu();
-};
-
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value;
-  isSpinning.value = true;
-  setTimeout(() => {
-    isSpinning.value = false;
-  }, 1000); // Spin for 2 seconds
-};
-
-const closeMenu = () => {
-  isMenuOpen.value = false;
-};
-</script>
-
 <template>
-  <!-- Navbar -->
-  <nav class="bg-green-700 p-4">
+  <nav class="bg-gradient-to-r from-green-600 to-green-800 text-white py-4 px-6">
     <div class="container mx-auto flex justify-between items-center">
-      <router-link to="/" class="text-white text-2xl font-bold" @click="closeMenu">
-        <img alt="Vue logo" class="logo" src="../../assets/logo.svg" width="45" height="45" />
+      <!-- Logo -->
+      <router-link to="/" class="text-white text-2xl font-bold flex items-center space-x-2">
+        <img alt="Vue logo" class="logo rounded-full" src="../../assets/logo.svg" width="45" height="45" />
+        <span>MyApp</span>
       </router-link>
-      <div class="hidden md:flex space-x-4">
-        <router-link to="/" class="text-white hover:text-gray-200" @click="closeMenu">Home</router-link>
-        <router-link to="/about" class="text-white hover:text-gray-200" @click="closeMenu">About Me</router-link>
-        <router-link to="/users" class="text-white hover:text-gray-200" @click="closeMenu">Users</router-link>
-        <router-link to="/login" class="text-white hover:text-gray-200" @click="closeMenu">Login</router-link>
-        <router-link to="/contact" class="text-white hover:text-gray-200" @click="closeMenu">Contact Us</router-link>
-        <a href="#" @click.prevent="handleLogout" class="text-white hover:text-gray-200">Logout</a>
+
+      <!-- Navigation Links -->
+      <div class="hidden md:flex space-x-6">
+        <router-link to="/" class="hover:text-gray-200 transition duration-300">Home</router-link>
+        <router-link to="#" class="hover:text-gray-200 transition duration-300">About</router-link>
+        <router-link to="#" class="hover:text-gray-200 transition duration-300">Contact</router-link>
       </div>
-      <button @click="toggleMenu" class="md:hidden text-white focus:outline-none">
-        <svg :class="{'spin-animation': isSpinning}" class="w-8 h-8 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </div>
-    <div v-if="isMenuOpen" class="md:hidden mt-4 space-y-2">
-      <router-link to="/" class="block text-white hover:text-gray-200" @click="closeMenu">Home</router-link>
-      <router-link to="/about" class="block text-white hover:text-gray-200" @click="closeMenu">About Me</router-link>
-      <router-link to="/users" class="block text-white hover:text-gray-200" @click="closeMenu">Users</router-link>
-      <router-link to="/login" class="block text-white hover:text-gray-200" @click="closeMenu">Login</router-link>
-      <router-link to="/contact" class="block text-white hover:text-gray-200" @click="closeMenu">Contact Us</router-link>
-      <a href="#" @click.prevent="handleLogout" class="block text-white hover:text-gray-200">Logout</a>
+
+      <!-- Welcome Message or Login/Logout -->
+      <div class="flex items-center space-x-4">
+        <template v-if="userStore.user">
+          <span class="text-gray-200">Welcome, {{ userStore.user.name }}</span>
+          <button
+            @click="handleLogout"
+            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition duration-300"
+          >
+            Logout
+          </button>
+        </template>
+        <template v-else>
+          <router-link
+            to="/login"
+            class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition duration-300"
+          >
+            Login
+          </router-link>
+        </template>
+      </div>
     </div>
   </nav>
 </template>
 
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user.js';
+
+const userStore = useUserStore();
+const router = useRouter();
+const isLoggedIn = ref(false);
+const userName = ref(null);
+
+// Check if user is logged in and retrieve user data
+onMounted(() => {
+  userStore.initialize();
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (token && user) {
+    isLoggedIn.value = true;
+    userName.value = user.name || user.email; // Use name if available, otherwise use email
+  }
+});
+
+// Handle Logout
+const handleLogout = () => {
+  userStore.logout();
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  isLoggedIn.value = false;
+  router.push('/login');
+};
+</script>
+
 <style scoped>
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Gradient Background */
+.bg-gradient-to-r {
+  background: linear-gradient(90deg, #10b981, #047857);
 }
 
-.spin-animation {
-  animation: spin 2s linear;
+/* Padding */
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Hover Effects */
+.hover\:text-gray-200:hover {
+  color: #e5e7eb;
+}
+
+/* Button Styling */
+.bg-green-500 {
+  background-color: #10b981;
+}
+.bg-red-500 {
+  background-color: #ef4444;
+}
+.hover\:bg-green-600:hover {
+  background-color: #059669;
+}
+.hover\:bg-red-600:hover {
+  background-color: #dc2626;
+}
+
+/* Transition */
+.transition {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
 }
 </style>
