@@ -2,7 +2,9 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user.js';
 
+const userStore = useUserStore();
 const users = ref([]);
 const router = useRouter();
 const isModalOpen = ref(false);
@@ -80,6 +82,7 @@ const cancelEditing = () => {
 const saveUser = async () => {
   try {
     await axios.put(`http://localhost:3000/users/${editedUser.value._id}`, editedUser.value);
+    userStore.updateUser(editedUser.value); // Update user in the store
     fetchUsers(); // Refresh the user list after update
     cancelEditing();
   } catch (error) {
