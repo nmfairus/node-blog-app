@@ -1,11 +1,9 @@
 // Import the express library
+import 'dotenv/config';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import userRoutes from './srv/routes/userRoutes.js';
-
-// Load environment variables
-
 
 // Import database
 import connectToDatabase from "./srv/config/conn.js";
@@ -13,10 +11,10 @@ connectToDatabase();
 
 // Create an instance of express
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 
 // Use the body-parser package in our application and enable CORS
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
