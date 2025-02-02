@@ -6,7 +6,7 @@
       <ul class="space-y-4">
         <li>
           <router-link
-            to="#"
+            to="/dashboard"
             class="flex items-center space-x-2 text-gray-700 hover:text-green-700 transition duration-300"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -17,7 +17,7 @@
         </li>
         <li>
           <router-link
-            to="#"
+            to="/users"
             class="flex items-center space-x-2 text-gray-700 hover:text-green-700 transition duration-300"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
