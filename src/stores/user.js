@@ -23,6 +23,13 @@ export const useUserStore = defineStore('user', {
       localStorage.removeItem('user');
       localStorage.removeItem('token');
     },
+    updateUser(updatedData) {
+      // Kemas kini data pengguna
+      this.user = { ...this.user, ...updatedData };
+
+      // Simpan semula ke localStorage
+      localStorage.setItem('user', JSON.stringify(this.user));
+    },
     initialize() {
       // Muat semula data dari localStorage semasa aplikasi dimulakan
       const user = localStorage.getItem('user');
